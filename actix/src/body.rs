@@ -7,7 +7,7 @@
 //
 
 use crate::error::Error;
-use actix_http::body::{Body as ActixBody, BodySize, MessageBody};
+use actix_http::body::{BodySize, MessageBody};
 use bytes::Bytes;
 use common_multipart::client::multipart;
 use futures::{
@@ -24,12 +24,6 @@ pub struct Body<'a>(multipart::Body<'a>);
 impl<'a> From<multipart::Form<'a>> for Body<'a> {
     fn from(form: multipart::Form<'a>) -> Body<'a> {
         Body(multipart::Body::from(form))
-    }
-}
-
-impl Into<ActixBody> for Body<'static> {
-    fn into(self) -> ActixBody {
-        ActixBody::Message(Box::new(self))
     }
 }
 
